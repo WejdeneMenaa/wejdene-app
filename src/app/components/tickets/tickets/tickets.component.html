@@ -1,0 +1,72 @@
+<div class="row">
+    <div>
+        <button class="btn btn-success" routerLink="/tickets/edit/new" type="button">New Ticket</button>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-4">
+        <!-- Search and filters -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Tickets</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Search in tickets</h6>        
+                <br>
+                <div class="mb-3">
+                  <label class="form-label">Text search</label>
+                  <input type="text" [(ngModel)]="search" class="form-control" aria-describedby="textHelp">
+                  <div id="textHelp" class="form-text">This will search in title and description field.</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Priority</label>
+                    <select class="form-select" [(ngModel)]="priority" aria-label="Default select example">
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" [(ngModel)]="status" aria-label="Default select example">
+                        <option value="on-going">On-going</option>
+                        <option value="in-progress">In progress</option>
+                        <option value="done">Closed</option>
+                    </select>
+                </div>
+                <div class="text-end">
+                    <button type="submit" (click)="searchTickets()" class="btn btn-secondary">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ticket of tickets">
+                <th scope="row">{{ ticket.id }}</th>
+                <td>{{ ticket.title }}</td>
+                <td>{{ ticket.description }}</td>
+                <td>{{ ticket.priority }}</td>
+                <td>{{ ticket.status }}</td>
+                <td>
+                    <!-- buttons here || appStorage.getItem('id')==ticket.assignee.toString() || appStorage.getItem('id')==ticket.createdBy.toString() --> 
+                    <div class="d-grid gap-2 d-md-block">
+                        <button *ngIf="appStorage.getItem('role')=='admin'" class="btn btn-secondary" routerLink="/tickets/edit/{{ticket.id}}" type="button">Edit</button>
+                        <button *ngIf="appStorage.getItem('role')=='admin'" class="btn btn-danger btn-trash" (click)="deleteTicket(ticket.id)">X</button>
+                    </div>
+                </td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

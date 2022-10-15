@@ -1,0 +1,55 @@
+<div class="row">
+    <div *ngIf="appStorage.getItem('role')=='admin'" class="col-md-4">
+        <!-- Search and filters -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Categories</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Add new category</h6>        
+                <br>
+                <div class="mb-3">
+                  <label class="form-label">Category name</label>
+                  <input type="email" [(ngModel)]="newCategory.name" class="form-control" aria-describedby="textHelp">
+                </div>
+                <div *ngIf="formResponse.message.length>0" class="alert alert-success" role="alert">
+                  {{ formResponse.message }}
+                </div>
+                <div *ngIf="formResponse.error.length>0" class="alert alert-warning" role="alert">
+                  {{ formResponse.error }}
+                </div>
+                <div class="text-end">
+                    <button type="submit" (click)="addCategory()" class="btn btn-success">Add category</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let category of categories">
+                <th scope="row">{{ category.id }}</th>
+                <td *ngIf="!category.edit">{{ category.name }}</td>
+                <td *ngIf="category.edit">
+                  <div class="mb-3">
+                    <input type="text" [(ngModel)]="category.name" class="form-control">
+                  </div>
+                </td>
+                <td>
+                    <!-- buttons here -->
+                    <div class="d-grid gap-2 d-md-block">
+                      <button class="btn btn-primary" *ngIf="category.edit" (click)="editCategory(category)" type="button">Save</button>
+                      <button *ngIf="appStorage.getItem('role')=='admin' && !category.edit" class="btn btn-secondary" (click)="category.edit=true" type="button">Edit</button>
+                      <button *ngIf="appStorage.getItem('role')=='admin'" class="btn btn-danger btn-trash" (click)="deleteCategory(category.id)">X</button>
+                    </div>
+                </td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

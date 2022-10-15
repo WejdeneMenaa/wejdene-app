@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-body">
+    <img src="assets/images/user.png" class="avatar" alt="">
+    <br><br>
+    <h4 class="card-title"><b>{{ user.fullname }}</b></h4>
+    <h6 class="card-sub-title">@{{ user.username }}</h6>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <h5><span *ngIf="user.role=='admin'" class="badge bg-success">Admin</span></h5>
+      <h5><span *ngIf="user.role=='agent'" class="badge bg-primary">Agent</span></h5>
+      <h5><span *ngIf="user.role=='user'" class="badge bg-secondary">Client</span></h5>
+    </li>
+    <li class="list-group-item">
+      {{ user.email }}
+    </li>
+    <li class="list-group-item">{{ user.phone }}</li>
+  </ul>
+</div>
